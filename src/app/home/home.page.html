@@ -1,20 +1,44 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Application Géolocalisation</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+<ion-content class="ion-padding">
+  <div class="boutons">
+    <ion-button expand="block" (click)="obtenirPositionPonctuelle()">Obtenir Position</ion-button>
+    <ion-button expand="block" color="success" (click)="demarrerSuivi()">Démarrer Suivi</ion-button>
+    <ion-button expand="block" color="danger" (click)="arreterSuivi()">Arrêter Suivi</ion-button>
+    <ion-button expand="block" fill="outline" routerLink="/map">Carte</ion-button>
+    <ion-button expand="block" fill="outline" routerLink="/historique">Historique</ion-button>
   </div>
+
+  @if (chargement) {
+    <ion-spinner name="crescent"></ion-spinner>
+  }
+
+  @if (position) {
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Coordonnées</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>Latitude : {{ position.latitude }}</p>
+        <p>Longitude : {{ position.longitude }}</p>
+        <p>Altitude : {{ position.altitude ?? 'non disponible' }}</p>
+        @if (nbPositions > 0) {
+          <p>Positions reçues : {{ nbPositions }}</p>
+        }
+        @if (dureeSuivi > 0) {
+          <p>Durée du suivi : {{ dureeSuivi }} s</p>
+        }
+      </ion-card-content>
+    </ion-card>
+  }
+
+  @if (erreur) {
+    <ion-card color="danger">
+      <ion-card-content>{{ erreur }}</ion-card-content>
+    </ion-card>
+  }
 </ion-content>

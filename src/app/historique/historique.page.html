@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Historique</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  @if (chargement()) {
+    <ion-spinner name="crescent"></ion-spinner>
+  }
+  @if (erreur()) {
+    <p class="message">{{ erreur() }}</p>
+  }
+  @if (!chargement() && !erreur() && entrees().length === 0) {
+    <p class="message">Aucune entrée pour le moment.</p>
+  }
+
+  <ion-list>
+    @for (e of entrees(); track e.id) {
+      <ion-item>
+        <ion-label>
+          <h2>{{ e.type === 'position' ? 'Position' : 'Distance mesurée' }}</h2>
+          <p>Lat {{ e.latitude.toFixed(5) }} · Lng {{ e.longitude.toFixed(5) }}</p>
+          @if (e.distance !== undefined) {
+            <p>Distance : {{ e.distance }} m</p>
+          }
+          <p>{{ e.date.toLocaleString('fr-FR') }}</p>
+        </ion-label>
+        <ion-button fill="clear" color="danger" slot="end" (click)="supprimer(e.id!)">Supprimer</ion-button>
+      </ion-item>
+    }
+  </ion-list>
+</ion-content>
