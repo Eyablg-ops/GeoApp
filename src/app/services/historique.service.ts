@@ -11,14 +11,15 @@ export interface Entree {
   type: 'position' | 'distance';
   latitude: number;
   longitude: number;
-  distance?: number;   // en mètres
+  distance?: number; // Distance en mètres
   date: Date;
 }
 
 @Injectable({ providedIn: 'root' })
 export class HistoriqueService {
   private db = initializeFirestore(initializeApp(environment.firebaseConfig), {
-    experimentalAutoDetectLongPolling: true,   // plus fiable dans une WebView mobile
+    // Long-polling automatique : maintient une connexion fiable dans les WebViews mobile.
+    experimentalAutoDetectLongPolling: true,
   });
   private col = collection(this.db, 'historique');
 

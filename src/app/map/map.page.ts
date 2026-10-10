@@ -35,7 +35,8 @@ export class MapPage implements AfterViewInit, OnDestroy {
     }).addTo(map);
 
     map.on('click', (e: L.LeafletMouseEvent) => this.calculerDistance(e.latlng));
-    setTimeout(() => map.invalidateSize(), 300);   // la carte prend la bonne taille
+    // Recalcule les dimensions du conteneur une fois le rendu terminé.
+    setTimeout(() => map.invalidateSize(), 300);
 
     await this.localiser();
   }

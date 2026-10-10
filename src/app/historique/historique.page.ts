@@ -20,7 +20,8 @@ export class HistoriquePage {
       entrees = signal<Entree[]>([]);
   chargement = signal(false);
   erreur = signal('');
-  ionViewWillEnter() {   // appelée à chaque fois qu'on arrive sur la page
+  // Cycle de vie Ionic : exécuté à chaque entrée sur la page.
+  ionViewWillEnter() {
     this.charger();
   }
 
